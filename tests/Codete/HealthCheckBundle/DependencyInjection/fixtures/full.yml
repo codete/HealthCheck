@@ -1,0 +1,15 @@
+health_check:
+  handlers:
+    psr3:
+      type: psr3
+      id: logger
+      level: warning
+    chain:
+      type: chain
+      members: [ psr3, elephpant ]
+    elephpant:
+      type: remembering
+  status:
+    green: ~
+    yellow: elephpant
+    red: chain

@@ -1,0 +1,29 @@
+{
+    "name": "codete/health-check",
+    "description": "Library providing unified way for running application health checks",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maciej Malarz",
+            "email": "malarzm@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0",
+        "symfony/http-kernel": "^2.7 || ^3.0",
+        "symfony/dependency-injection": "^2.7 || ^3.0",
+        "symfony/config": "^2.7 || ^3.0",
+        "symfony/console": "^2.7 || ^3.0",
+        "symfony/framework-bundle": "^2.7 || ^3.0",
+        "symfony/yaml": "^2.7 || ^3.0",
+        "psr/log": "^1.0.1"
+    },
+    "autoload": {
+        "psr-0": { "Codete\\HealthCheck": "src" }
+    }
+}

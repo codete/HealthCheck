@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="hc.status.green">null</parameter>
+        <parameter key="hc.status.yellow">null</parameter>
+        <parameter key="hc.status.red">null</parameter>
+    </parameters>
+    
+    <services>
+        <service id="hc.executor" class="Codete\HealthCheck\Executor">
+            <argument type="service" id="hc.health_check_registry" />
+            <argument type="service" id="hc.delegating_result_handler" />
+        </service>
+
+        <!-- Registries -->
+        <service id="hc.health_check_registry" class="Codete\HealthCheck\HealthCheckRegistry" />
+        <service id="hc.result_handler_registry" class="Codete\HealthCheck\ResultHandlerRegistry" />
+
+        <!-- DelegatingResultHandler -->
+        <service id="hc.delegating_result_handler_factory" class="Codete\HealthCheckBundle\DelegatingResultHandlerFactory">
+            <argument type="service" id="hc.result_handler_registry"/>
+        </service>
+        <service id="hc.delegating_result_handler" class="Codete\HealthCheck\ResultHandler\Delegating">
+            <factory service="hc.delegating_result_handler_factory" method="create" />
+            <argument>%hc.status.green%</argument>
+            <argument>%hc.status.yellow%</argument>
+            <argument>%hc.status.red%</argument>
+        </service>
+    </services>
+</container>
