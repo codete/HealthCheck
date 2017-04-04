@@ -16,10 +16,8 @@ class HealthStatusTest extends \PHPUnit\Framework\TestCase
 
     public function provideToString()
     {
-        yield [new HealthStatus(HealthStatus::OK, ''), '0'];
-        yield [new HealthStatus(HealthStatus::WARNING, ''), '1'];
-        yield [new HealthStatus(HealthStatus::ERROR, ''), '2'];
-        yield [new HealthStatus(HealthStatus::OK, 'Well done!'), '0 Well done!'];
+        yield [new HealthStatus(HealthStatus::WARNING, ''), ''];
+        yield [new HealthStatus(HealthStatus::OK, 'Well done!'), 'Well done!'];
     }
 
     public function testWithStatus()

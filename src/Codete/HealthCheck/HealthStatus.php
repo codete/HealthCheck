@@ -23,7 +23,7 @@ class HealthStatus
      * @param int $status
      * @param string $message
      */
-    public function __construct($status, $message)
+    public function __construct(int $status, string $message)
     {
         if (! in_array($status, [self::OK, self::WARNING, self::ERROR])) {
             throw new \InvalidArgumentException(sprintf("%d is not a valid status"));
@@ -37,7 +37,7 @@ class HealthStatus
      */
     public function __toString()
     {
-        return sprintf("%d%s", $this->status, $this->message ? (' ' . $this->message) : '');
+        return $this->getMessage();
     }
 
     /**

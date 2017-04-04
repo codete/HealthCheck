@@ -42,7 +42,7 @@ class RunCommandTest extends \PHPUnit\Framework\TestCase
         $commandTester->execute(['FQCN' => HealthCheckToRun::class]);
 
         $expectedOutput = <<<OUTPUT
-1 Heads up!
+Heads up!
 
 OUTPUT;
         $this->assertSame($expectedOutput, $commandTester->getDisplay());
