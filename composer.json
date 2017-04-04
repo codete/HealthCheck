@@ -26,5 +26,9 @@
     },
     "autoload": {
         "psr-0": { "Codete\\HealthCheck": "src" }
+    },
+    "suggest": {
+        "psr/log": "For easily configurable PSR3 result handlers",
+        "maknz/slack": "For easily configurable Slack result handlers"
     }
 }
