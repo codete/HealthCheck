@@ -43,6 +43,10 @@ class Configuration implements ConfigurationInterface
                                 ->performNoDeepMerging()
                                 ->prototype('scalar')->end()
                             ->end()
+                            ->scalarNode('url')->end()      // slack
+                            ->scalarNode('channel')->end()  // slack
+                            ->scalarNode('username')->end() // slack
+                            ->scalarNode('icon')->end()     // slack
                     ->end()
                     ->validate()
                         ->always(function (array $check) {
@@ -65,6 +69,8 @@ class Configuration implements ConfigurationInterface
                 return $this->extract($h, ['members']);
             case 'remembering':
                 return ['type' => $h['type']];
+            case 'slack':
+                return $this->extract($h, ['url', 'channel', 'username', 'icon']);
             default:
                 throw new \InvalidArgumentException(sprintf('Unknown handler type "%s".', $h['type']));
         }

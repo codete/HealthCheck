@@ -6,6 +6,7 @@ namespace Codete\HealthCheckBundle\DependencyInjection;
 use Codete\HealthCheck\ResultHandler\Chain;
 use Codete\HealthCheck\ResultHandler\Psr3;
 use Codete\HealthCheck\ResultHandler\Remembering;
+use Codete\HealthCheck\ResultHandler\Slack;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -54,6 +55,13 @@ class HealthCheckExtension extends Extension
                 return $def;
             case 'remembering':
                 return new Definition(Remembering::class);
+            case 'slack':
+                return new Definition(Slack::class, [
+                    $config['url'],
+                    $config['channel'],
+                    $config['username'],
+                    $config['icon']
+                ]);
         }
     }
 

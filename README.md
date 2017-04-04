@@ -56,6 +56,12 @@ health_check:
       members: [ psr3, name_of_your_tagged_handler ]
     elephpant:
       type: remembering               # aggregates results to be fetched later
+    slack:
+      type: slack                     # posts result to Slack channel
+      url: https://hooks.slack.com/   # endpoint for an incoming webhook
+      channel: dev                    # channel to post in
+      username: notifier              # username for bot
+      icon: ':angel:'                 # icon for bot
   status:                             # choose which handler should be called for each result status
     green: ~                          # no reporting
     yellow: elephpant                 # use "elephpant" handler

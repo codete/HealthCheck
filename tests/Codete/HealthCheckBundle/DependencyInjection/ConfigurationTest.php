@@ -30,6 +30,13 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
                 'elephpant' => [
                     'type' => 'remembering',
                 ],
+                'slack' => [
+                    'type' => 'slack',
+                    'url' => 'https://slack.com',
+                    'channel' => 'dev',
+                    'username' => 'notifier',
+                    'icon' => ':ghost:',
+                ],
             ],
             'status' => [
                 'green' => null,

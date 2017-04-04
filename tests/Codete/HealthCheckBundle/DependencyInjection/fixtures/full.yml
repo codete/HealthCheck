@@ -9,6 +9,12 @@ health_check:
       members: [ psr3, elephpant ]
     elephpant:
       type: remembering
+    slack:
+      type: slack
+      url: https://slack.com
+      channel: dev
+      username: notifier
+      icon: ':ghost:'
   status:
     green: ~
     yellow: elephpant
