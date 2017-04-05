@@ -44,16 +44,16 @@ class Executor
     public function run(HealthCheck $check): HealthStatus
     {
         $result = $check->check();
-        if ($this->shouldStatusChangeDueToExpiration($result, $check->validUntil())) {
+        if ($check instanceof ExpiringHealthCheck && $this->shouldStatusChangeDueToExpiration($result, $check->validUntil())) {
             $result = $result->withStatus(HealthStatus::WARNING);
         }
         $this->resultHandler->handle($check, $result);
         return $result;
     }
 
-    private function shouldStatusChangeDueToExpiration(HealthStatus $status, \DateTimeImmutable $validUntil = null): bool
+    private function shouldStatusChangeDueToExpiration(HealthStatus $status, \DateTimeImmutable $validUntil): bool
     {
-        if ($status->getStatus() !== HealthStatus::OK || $validUntil === null) {
+        if ($status->getStatus() !== HealthStatus::OK) {
             return false;
         }
         return $validUntil <= new \DateTimeImmutable();

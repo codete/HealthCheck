@@ -16,13 +16,14 @@ Any health check must implement `\Codete\HealthCheck\HealthCheck` interface. To 
 you can tag service with `hc.health_check` tag if you're using Symfony or add it to 
 `\Codete\HealthCheck\HealthCheckRegistry` manually.
 
-To fulfill the `HealthCheck` contract your implementation must provide 3 methods:
+To fulfill the `HealthCheck` contract your implementation must provide 2 methods:
 
 * `getName` - human readable name of the check
 * `check` - actual logic of your check
-* `validUntil` - optional date to indicate until when the check is considered safe. Useful for 3rd party API health 
-checks when you know when used version will no longer be supported. In practice checks that are OK but valid date 
-is due will turn to warnings.
+
+Additionally the library provides `\Codete\HealthCheck\ExpiringHealthCheck` which allows you to set an expiry date
+for the check. This can prove especially useful for 3rd party API health checks when you know when used version 
+will no longer be supported. In practice checks that are OK but valid date is due will turn to warnings.
 
 The `check` method must return `\Codete\HealthCheck\HealthStatus` object which encapsulates check result (OK, 
 WARNING or ERROR) and an optional message. Basing on status result Result Handlers can act accordingly.

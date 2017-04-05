@@ -67,12 +67,4 @@ class HealthCheckToRun implements HealthCheck
     {
         return 'A check';
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function validUntil(): ?\DateTimeImmutable
-    {
-        return null;
-    }
 }

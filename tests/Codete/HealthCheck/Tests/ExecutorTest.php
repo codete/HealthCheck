@@ -3,6 +3,7 @@
 namespace Codete\HealthCheck\Tests;
 
 use Codete\HealthCheck\Executor;
+use Codete\HealthCheck\ExpiringHealthCheck;
 use Codete\HealthCheck\HealthCheck;
 use Codete\HealthCheck\HealthCheckRegistry;
 use Codete\HealthCheck\HealthStatus;
@@ -16,7 +17,7 @@ class ExecutorTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->healthCheck = $this->createMock(HealthCheck::class);
+        $this->healthCheck = $this->createMock(ExpiringHealthCheck::class);
 
         $this->healthCheckRegistry = new HealthCheckRegistry();
         $this->healthCheckRegistry->register($this->healthCheck);
@@ -24,8 +25,12 @@ class ExecutorTest extends \PHPUnit\Framework\TestCase
 
     public function testSimpleFlow()
     {
+        $this->healthCheckRegistry = new HealthCheckRegistry();
+
         $result = new HealthStatus(HealthStatus::OK, 'OK');
+        $this->healthCheck = $this->createMock(HealthCheck::class);
         $this->healthCheck->expects($this->once())->method('check')->willReturn($result);
+        $this->healthCheckRegistry->register($this->healthCheck);
         $anotherHealthCheck = $this->createMock(HealthCheck::class);
         $anotherHealthCheck->expects($this->once())->method('check')->willReturn($result);
         $this->healthCheckRegistry->register($anotherHealthCheck);

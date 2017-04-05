@@ -84,12 +84,4 @@ class StubbedHealthCheck implements HealthCheck
     {
         return $this->name;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function validUntil(): ?\DateTimeImmutable
-    {
-        return null;
-    }
 }
