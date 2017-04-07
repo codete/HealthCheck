@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Codete\HealthCheckBundle\Command;
 
 use Codete\HealthCheck\Executor;
+use Codete\HealthCheck\HealthCheckRegistry;
 use Codete\HealthCheck\ResultHandler;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,13 +22,14 @@ class RunAllCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // to not interfere with any defined handlers we'll create new executor
-        $handler = $this->getContainer()->get('hc.delegating_result_handler');
-        $executor = new Executor(
-            $this->getContainer()->get('hc.health_check_registry'),
-            new ResultHandler\Chain(new PrettyOutputWritingResultHandler($output), $handler)
-        );
-
-        $executor->runAll();
+        $handler = new PrettyOutputWritingResultHandler($output);
+        /** @var Executor $executor */
+        $executor = $this->getContainer()->get('hc.executor');
+        /** @var HealthCheckRegistry $registry */
+        $registry = $this->getContainer()->get('hc.health_check_registry');
+        foreach ($registry->getAll() as $healthCheck) {
+            $result = $executor->run($healthCheck);
+            $handler->handle($healthCheck, $result);
+        }
     }
 }

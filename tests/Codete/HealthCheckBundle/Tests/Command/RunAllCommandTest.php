@@ -2,6 +2,7 @@
 
 namespace Codete\HealthCheckBundle\Tests\Command;
 
+use Codete\HealthCheck\Executor;
 use Codete\HealthCheck\HealthCheck;
 use Codete\HealthCheck\HealthCheckRegistry;
 use Codete\HealthCheck\HealthStatus;
@@ -23,13 +24,15 @@ class RunAllCommandTest extends \PHPUnit\Framework\TestCase
         // 3 checks and all 3 calls are not lost due to handler manipulations
         $handler->expects($this->exactly(3))->method('handle');
 
+        $executor = new Executor($registry, $handler);
+
         $container = $this->createMock(Container::class);
-        $container->method('get')->will($this->returnCallback(function ($id) use ($registry, $handler) {
+        $container->method('get')->will($this->returnCallback(function ($id) use ($registry, $executor) {
             switch ($id) {
                 case 'hc.health_check_registry':
                     return $registry;
-                case 'hc.delegating_result_handler':
-                    return $handler;
+                case 'hc.executor':
+                    return $executor;
                 default:
                     throw new \InvalidArgumentException('Stub me! ' . $id);
             }
