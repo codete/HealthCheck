@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/codete/HealthCheck.svg?branch=master)](https://travis-ci.org/codete/HealthCheck)
+
 # Purpose
 
 HealthCheck library aims to provide an easy way to write arbitrary system checks that are ran regularly. For 
