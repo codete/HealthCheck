@@ -51,6 +51,28 @@ class HealthCheckExtensionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame([['id' => 'elephpant']], $def->getTag('hc.result_handler'));
     }
 
+    public function testServiceRegistration()
+    {
+        $container = $this->getContainer();
+        $loader = new HealthCheckExtension();
+        $container->registerExtension($loader);
+        $loader->load(Yaml::parse(file_get_contents(__DIR__.'/fixtures/full.yml')), $container);
+
+        // old way
+        $this->assertTrue($container->has('hc.executor'));
+        $this->assertTrue($container->has('hc.health_check_registry'));
+        $this->assertTrue($container->has('hc.result_handler_registry'));
+        $this->assertTrue($container->has('hc.delegating_result_handler_factory'));
+        $this->assertTrue($container->has('hc.delegating_result_handler'));
+
+        // FQCN way
+        $this->assertTrue($container->has(\Codete\HealthCheck\Executor::class));
+        $this->assertTrue($container->has(\Codete\HealthCheck\HealthCheckRegistry::class));
+        $this->assertTrue($container->has(\Codete\HealthCheck\ResultHandlerRegistry::class));
+        $this->assertTrue($container->has(\Codete\HealthCheckBundle\DelegatingResultHandlerFactory::class));
+        $this->assertTrue($container->has(\Codete\HealthCheck\ResultHandler\Delegating::class));
+    }
+
     private function getContainer()
     {
         return new ContainerBuilder(new ParameterBag([
