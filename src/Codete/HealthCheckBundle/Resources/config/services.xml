@@ -29,5 +29,12 @@
             <argument>%hc.status.yellow%</argument>
             <argument>%hc.status.red%</argument>
         </service>
+
+        <!-- FQCN aliases for services -->
+        <service alias="hc.executor" id="Codete\HealthCheck\Executor" />
+        <service alias="hc.health_check_registry" id="Codete\HealthCheck\HealthCheckRegistry" />
+        <service alias="hc.result_handler_registry" id="Codete\HealthCheck\ResultHandlerRegistry" />
+        <service alias="hc.delegating_result_handler_factory" id="Codete\HealthCheckBundle\DelegatingResultHandlerFactory" />
+        <service alias="hc.delegating_result_handler" id="Codete\HealthCheck\ResultHandler\Delegating" />
     </services>
 </container>
